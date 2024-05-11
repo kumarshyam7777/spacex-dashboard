@@ -8,19 +8,18 @@ const LaunchDetailPage = () => {
   const [launch, setLaunch] = useState(null);
 
   useEffect(() => {
+    const fetchLaunchDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.spacexdata.com/v3/launches/${flightNumber}`
+        );
+        setLaunch(response.data);
+      } catch (error) {
+        console.error("Error fetching launch details:", error);
+      }
+    };
     fetchLaunchDetails();
   }, [flightNumber]);
-
-  const fetchLaunchDetails = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.spacexdata.com/v3/launches/${flightNumber}`
-      );
-      setLaunch(response.data);
-    } catch (error) {
-      console.error("Error fetching launch details:", error);
-    }
-  };
 
   if (!launch) {
     return <div>Loading...</div>;

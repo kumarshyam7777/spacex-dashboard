@@ -14,10 +14,7 @@ const LaunchesPage = () => {
     history.push(`/launch/${flightNumber}`);
   };
 
-  useEffect(() => {
-    fetchLaunches();
-  }, [page]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchLaunches = async () => {
     setIsLoading(true);
     try {
@@ -34,6 +31,13 @@ const LaunchesPage = () => {
     }
   };
 
+  useEffect(() => {
+    fetchLaunches();
+  }, [fetchLaunches, page]);
+
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = () => {
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
@@ -47,7 +51,7 @@ const LaunchesPage = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   return (
     <div class="launch-page">
